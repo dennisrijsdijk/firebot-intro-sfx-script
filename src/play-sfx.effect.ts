@@ -179,7 +179,7 @@ const effect: EffectType<EffectModel> = {
         if (data.audioOutputDevice == null || data.audioOutputDevice.label === "App Default") {
             data.audioOutputDevice = settings.getAudioOutputDevice();
             if (data.audioOutputDevice.deviceId == "overlay") {
-                data.overlayInstance = null;7
+                data.overlayInstance = null;
             }
         }
 
