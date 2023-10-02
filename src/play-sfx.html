@@ -1,0 +1,97 @@
+<style>
+    tr:hover {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    tr.active {
+        background: rgba(0, 0, 0, 0.25);
+    }
+
+    tr.header {
+        background: rgba(0, 0, 0, 0) !important;
+    }
+    </style>
+
+<div ng-show="status === 'fetching'">
+    loading...
+</div>
+
+<div ng-show="status === 'error'">
+    There was an error while fetching User SFX data. Please consult your local tech person.
+</div>
+
+<div ng-show="status === 'fetched'">
+    <eos-audio-output-device effect="effect" onchange="console.log(audio)" pad-top="true"></eos-audio-output-device>
+
+    <eos-overlay-instance ng-if="effect.audioOutputDevice && effect.audioOutputDevice.deviceId === 'overlay'" effect="effect" pad-top="true"></eos-overlay-instance>
+
+    <eos-container ng-repeat="(id, user) in users" ng-show="activeUser === id" header="{{user.name}} Settings" pad-top="true">
+        <div>
+            <div style="margin-bottom: 10px">
+                <file-chooser model="user.path" options="{ filters: [ {name: 'Audio', extensions: ['mp3', 'ogg', 'wav', 'flac']} ]}" on-update="pathUpdated(id, filepath)"></file-chooser>
+            </div>
+            <div>
+                <sound-player path="user.path" volume="user.volume" output-device="audio.audioOutputDevice"></sound-player>
+            </div>
+            <div style="padding-top: 24px;" class="volume-slider-wrapper">
+                <i class="fal fa-volume-down volume-low"></i>
+                <rzslider
+                        rz-slider-model="user.volume"
+                        rz-slider-options="
+                    {
+                        id: id,
+                        floor: 0.1,
+                        ceil: 10,
+                        step: 0.1,
+                        precision: 1,
+                        hideLimitLabels: true,
+                        showSelectionBar: true,
+                        translate: sliderTranslate,
+                        onEnd: volumeUpdated
+                    }"></rzslider>
+
+                <i class="fal fa-volume-up volume-high"></i>
+            </div>
+        </div>
+    </eos-container>
+
+    <eos-container ng-if="users" header="Users" pad-top="true">
+
+        <div style="margin-top: 10px;">
+
+            <table style="max-height: 200px;
+        width: 100%;
+        overflow-y: scroll;
+        border-collapse: separate;
+        -webkit-border-vertical-spacing: 4px;">
+                <tr class="header">
+                    <th style="width: 10%;"></th>
+                    <th style="width: 80%;">
+                        <firebot-input
+                                style="margin-top: 20px; margin-right: 40px;"
+                                model="userSearchText"
+                                input-type="string"
+                                disable-variables="true"
+                                placeholder-text="Search..."></firebot-input>
+                    </th>
+                    <th style="width: 10%;">
+                        <div class="btn btn-primary" ng-click="addUser()">
+                            <i class="far fa-plus-circle"></i>
+                        </div>
+                    </th>
+
+                </tr>
+                <tr
+                        ng-repeat="(id, user) in users"
+                        ng-if="userSearchText == null || user.name.toLowerCase().includes(userSearchText.toLowerCase()) || id === selectedUser"
+                        style="margin-bottom: 10px;"
+                        ng-class="{'active': id === activeUser}"
+                        ng-click="selectionChanged(id)">
+                    <td style="width: 10%;"><img style="border-radius: 50%" src="{{user.icon}}" alt="{{user.name}} User Icon" width="28" height="28"></td>
+                    <td style="width: 80%; text-align: center;">{{user.name}}</td>
+                    <td style="width: 10%;"><button class="btn btn-danger" ng-click="deleteUser(id)"><i class="far fa-trash"></i></button></td>
+                </tr>
+            </table>
+        </div>
+    </eos-container>
+</div>
