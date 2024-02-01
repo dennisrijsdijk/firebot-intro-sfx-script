@@ -1,7 +1,6 @@
 import {Firebot, ScriptModules} from "@crowbartools/firebot-custom-scripts-types";
 import { autoload } from "./autoload";
 import { EventSource } from "@crowbartools/firebot-custom-scripts-types/types/modules/event-manager";
-import path from "path";
 import {createSfxManager, sfxManager} from "./userSfxManager";
 import {setupTwitchApi} from "./twitchApi";
 import {FirebotSettings} from "@crowbartools/firebot-custom-scripts-types/types/settings";
@@ -35,6 +34,7 @@ const script: Firebot.CustomScript<Params> = {
     autoload(runRequest.modules, eventSource);
     modules = runRequest.modules;
     settings = runRequest.firebot.settings;
+    debugger;
     try {
       createSfxManager(modules.path.join(SCRIPTS_DIR, '..', 'db', 'userSfx.db'), modules);
     } catch (error) {

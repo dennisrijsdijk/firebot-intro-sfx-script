@@ -195,7 +195,7 @@ const effect: EffectType<EffectModel> = {
             // @ts-ignore
             data.resourceToken = modules.resourceTokenManager.storeResourcePath(
                 data.filepath,
-                duration
+                durationMs
             );
             modules.httpServer.sendToOverlay("sound", data)
             // send event to the overlay

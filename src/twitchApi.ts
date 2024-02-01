@@ -1,6 +1,5 @@
 import {ScriptModules} from "@crowbartools/firebot-custom-scripts-types";
-import {ApiClient} from "@twurple/api";
-import {HelixUser} from "@twurple/api/lib/api/helix/user/HelixUser";
+import {ApiClient, HelixUser} from "@twurple/api";
 
 let modules: ScriptModules
 
