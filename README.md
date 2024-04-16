@@ -1,24 +1,29 @@
-# Starter Firebot Custom Script in Typescript
+# Firebot User SFX Script
 
-## A very opinionated Firebot Script template.
+## A Firebot script that simplifies user-specific stream sounds (eg. entry SFX)
 
-### Setup
-1. Create a new repo based off this template (Click "Use this Template" above) or simply fork it
-2. `npm install`
+### Installation:
 
-### Development
-This template will automatically load the default export from the following:
-- System Commands (*.command.ts)
-- Conditions (*.condition.ts)
-- Effects (*.effect.ts)
-- Events (*.event.ts) - Use the EventSource in [main.ts](src%2Fmain.ts)
-- Event Filters (*.filter.ts)
-- Firebot Games (*.game.ts)
-- Integrations (*.integration.ts)
-- Command Restrictions (*.restriction.ts)
-- Replace Variables (*.variable.ts)
+Download the `user-sfx.js` file from the latest release and move it to the following directory:
 
-### Building
+Windows: `%appdata%\Firebot\v5\profiles\PROFILE\scripts`
+
+MacOS: `~/Library/Application Support/Firebot/v5/profiles/PROFILE/scripts`
+
+Linux: `~/.config/Firebot/v5/profiles/PROFILE/scripts`
+
+In Firebot, go to Settings > Scripts. Enable startup scripts, then Add New Startup Script.
+pick user-sfx.js and save.
+
+### Usage:
+
+Before proceeding, make sure Firebot is logged into the Streamer Account on Twitch.
+
+Create a command (eg. !hello) and add the "Play User SFX" effect. This is where the user SFX will play, and where you'll add new ones
+
+Create an event (eg. OBS Stream Started) and add the "Reset User SFX Cooldown" effect. The plugin tracks usage of user SFX and allows one per user, until the cooldown is reset.
+
+### Development (building)
 Dev:
 1. `npm run build:dev`
 - Automatically copies the compiled .js to Firebot's scripts folder.
@@ -26,7 +31,3 @@ Dev:
 Release:
 1. `npm run build`
 - Copy .js from `/dist`
-
-### Note
-- Keep the script definition object (that contains the `run`, `getScriptManifest`, and `getDefaultParameters` funcs) in the `index.ts` file as it's important those function names don't get minimized.
-- Edit the `"scriptOutputName"` property in `package.json` to change the filename of the outputted script.
