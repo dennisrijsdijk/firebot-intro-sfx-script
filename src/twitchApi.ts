@@ -10,19 +10,6 @@ export function setupTwitchApi(scriptModules: ScriptModules): void {
 
     // @ts-ignore 😠
     apiClient = modules.twitchApi._streamerClient;
-
-    // @ts-ignore 😠
-    modules.frontendCommunicator.onAsync("user-sfx:get-twitch-username", (id: string) => getRealUsernameForId(id));
-}
-
-async function getRealUsernameForId(id: string): Promise<string> {
-    try {
-        let result = await apiClient.users.getUserById(id);
-        return result.name;
-    } catch (err) {
-        modules.logger.error("Error while trying to get username:", err);
-    }
-    return null;
 }
 
 export async function getTwitchUsers(ids: string[]): Promise<HelixUser[]> {

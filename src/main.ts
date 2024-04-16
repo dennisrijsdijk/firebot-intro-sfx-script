@@ -41,7 +41,6 @@ const script: Firebot.CustomScript<Params> = {
       debugger;
     }
     setupTwitchApi(modules);
-    console.log(JSON.stringify(await sfxManager.getAllTwitchUsers(), null, 4));
   },
 };
 

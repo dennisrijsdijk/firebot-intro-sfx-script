@@ -24,7 +24,6 @@ class UserSfxManager {
             });
             return users;
         } catch (err) {
-            debugger;
             return null;
         }
     }

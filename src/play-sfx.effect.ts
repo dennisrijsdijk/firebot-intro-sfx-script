@@ -69,20 +69,16 @@ const effect: EffectType<EffectModel> = {
                     },
                     validationText: "Viewer already has an intro SFX."
                 },
-                (user: any) => {
-                    $q.when(backendCommunicator.fireEventAsync("user-sfx:get-twitch-username", user.id))
-                        .then((result: string) => {
-                            let username: string;
-                            //const username = result ?? user.username;
-                            if (user.username.toLowerCase() !== result.toLowerCase()) {
-                                username = `${user.username} (${result})`;
-                            } else {
-                                username = user.username;
-                            }
-                            // @ts-ignore 😠
-                            $scope.users[user.id] = {name: username, icon: user.avatarUrl, volume: 5, path: ""};
-                            backendCommunicator.fireEvent("user-sfx:add-user", user.id);
-                        });
+                (user: {avatarUrl: string, id: string, username: string, displayName: string}) => {
+                    let username: string;
+                    if (user.username.toLowerCase() !== user.displayName.toLowerCase()) {
+                        username = `${user.displayName} (${user.username})`;
+                    } else {
+                        username = user.displayName;
+                    }
+                    // @ts-ignore 😠
+                    $scope.users[user.id] = {name: username, icon: user.avatarUrl, volume: 5, path: ""};
+                    backendCommunicator.fireEvent("user-sfx:add-user", user.id);
                     // @ts-ignore 😠
                     $scope.selectionChanged(user.id);
                 });
