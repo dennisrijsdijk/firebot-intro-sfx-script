@@ -109,7 +109,7 @@ const effect: EffectType<EffectModel> = {
 
         $scope.users = {};
 
-        $q.when(backendCommunicator.fireEventAsync("user-sfx:initial-fetch"))
+        $q.when(backendCommunicator.fireEventAsync("user-sfx:get-twitch-users"))
             .then((result: Record<string, TwitchUserSfx>) => {
                 $scope.users = result;
                 $scope.status = $scope.users != null ? 'fetched' : 'error';

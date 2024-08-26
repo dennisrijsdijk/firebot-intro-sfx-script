@@ -24,12 +24,9 @@ class UserSfxManager {
             });
             return users;
         } catch (err) {
+            this._modules.logger.error("user-sfx script: error while retrieving Twitch users", err);
             return null;
         }
-    }
-
-    public async initialFetch(): Promise<Record<string, UserSfx>> {
-        return await this.getAllTwitchUsers();
     }
 
     public getUser(id: string): UserSfx {
@@ -85,7 +82,6 @@ class UserSfxManager {
             this._db.push('/', {lastReset: 1, users: {}}, true);
         }
         modules.frontendCommunicator.onAsync("user-sfx:get-twitch-users", _ => this.getAllTwitchUsers());
-        modules.frontendCommunicator.onAsync("user-sfx:initial-fetch", _ => this.initialFetch());
         modules.frontendCommunicator.on("user-sfx:set-user-volume", args => {
             let user = args as unknown as {id: string, volume: number}
             this.setUserVolume(user.id, user.volume);
