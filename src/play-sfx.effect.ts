@@ -133,7 +133,15 @@ const effect: EffectType<EffectModel> = {
                 if (scope.trigger.metadata.event.id === "chat-message") {
                     // @ts-ignore
                     userId = scope.trigger.metadata.eventData.chatMessage.userId;
+                } else {
+                    modules.logger.error(`user-sfx script: Unknown event '${scope.trigger.metadata.event.id}', expected 'chat-message'`);
+                    return false;
                 }
+                break;
+            // @ts-ignore 😠
+            case "channel_reward":
+                // @ts-ignore
+                userId = scope.trigger.metadata.userId;
                 break;
             case "manual":
                 if (scope.effect.activeUser == null || scope.effect.activeUser === "") {
@@ -142,7 +150,8 @@ const effect: EffectType<EffectModel> = {
                 userId = scope.effect.activeUser;
                 break;
             default:
-                modules.logger.error("user-sfx script: got trigger " + scope.trigger.type + ", expected 'command' or 'event'.");
+                debugger;
+                modules.logger.error("user-sfx script: got trigger " + scope.trigger.type + ", expected 'command', 'channel_reward' or 'event'.");
                 return false;
         }
 
