@@ -1,7 +1,7 @@
 {
   "name": "firebot-script-user-sfx",
   "scriptOutputName": "user-sfx",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A starter Firebot custom script",
   "main": "",
   "scripts": {

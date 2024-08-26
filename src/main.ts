@@ -15,7 +15,7 @@ const script: Firebot.CustomScript<Params> = {
       name: "Intro SFX",
       description: "Intro SFX Script for Firebot",
       author: "DennisOnTheInternet",
-      version: "1.0",
+      version: "1.0.1",
       firebotVersion: "5",
     };
   },
